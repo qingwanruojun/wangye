@@ -1,0 +1,927 @@
+/* 银发乡播 · 总控大屏（管理台布局 + 主站青绿天蓝色调） */
+
+:root {
+  --bs-ink: #0f2942;
+  --bs-ink-soft: rgba(15, 41, 66, 0.62);
+  --bs-paper: #f0f4f6;
+  --bs-card: #ffffff;
+  --bs-line: rgba(13, 116, 128, 0.14);
+  --bs-teal: #0d9488;
+  --bs-teal-dim: #0f766e;
+  --bs-sky: #0ea5e9;
+  --bs-sky-soft: rgba(14, 165, 233, 0.12);
+  --bs-radius: 10px;
+  --bs-radius-sm: 8px;
+  --bs-shadow: 0 2px 14px rgba(15, 70, 90, 0.07), 0 1px 3px rgba(15, 70, 90, 0.04);
+  --bs-shadow-hover: 0 8px 28px rgba(15, 70, 90, 0.1);
+  --bs-font: "Noto Sans SC", "Microsoft YaHei", system-ui, sans-serif;
+  --bs-display: "ZCOOL XiaoWei", var(--bs-font);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: clamp(13px, 0.85vw, 16px);
+}
+
+body.bs-page {
+  margin: 0;
+  min-height: 100vh;
+  font-family: var(--bs-font);
+  color: var(--bs-ink);
+  background: var(--bs-paper);
+  overflow-x: hidden;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.bs-watercolor {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 75% 50% at 8% 0%, rgba(14, 165, 233, 0.12), transparent 52%),
+    radial-gradient(ellipse 60% 45% at 92% 8%, rgba(13, 148, 136, 0.1), transparent 48%),
+    linear-gradient(165deg, #e8f4f7 0%, #f2f8f6 45%, #edf3f9 100%);
+}
+
+.bs-app {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: minmax(210px, 15.5rem) 1fr;
+  min-height: 100vh;
+}
+
+/* —— 侧栏 —— */
+.bs-sidebar {
+  background: var(--bs-card);
+  border-right: 1px solid var(--bs-line);
+  display: flex;
+  flex-direction: column;
+  padding: 1.25rem 0.9rem 1rem;
+  box-shadow: 4px 0 24px rgba(15, 70, 90, 0.04);
+}
+
+.bs-sidebar-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.5rem 0.6rem 1.25rem;
+  border-bottom: 1px dashed var(--bs-line);
+}
+
+.bs-logo-mark {
+  font-size: 1.5rem;
+  color: var(--bs-teal);
+  line-height: 1;
+}
+
+.bs-sidebar-brand strong {
+  display: block;
+  font-family: var(--bs-display);
+  font-size: 0.98rem;
+  letter-spacing: 0.04em;
+  font-weight: 600;
+}
+
+.bs-sidebar-brand small {
+  display: block;
+  margin-top: 2px;
+  font-size: 0.72rem;
+  color: var(--bs-ink-soft);
+  line-height: 1.35;
+}
+
+.bs-side-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 1rem;
+  flex: 1;
+}
+
+.bs-side-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 11px 12px;
+  border: none;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--bs-ink-soft);
+  font-family: inherit;
+  font-size: 0.86rem;
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+}
+
+.bs-side-item:hover {
+  background: rgba(14, 165, 233, 0.06);
+  color: var(--bs-ink);
+}
+
+.bs-side-item.active {
+  background: linear-gradient(135deg, var(--bs-teal), #14b8a6);
+  color: #fff;
+  font-weight: 600;
+  box-shadow: 0 4px 14px rgba(13, 148, 136, 0.35);
+}
+
+.bs-side-item.active .bs-side-ico {
+  opacity: 1;
+}
+
+.bs-side-ico {
+  opacity: 0.65;
+  font-size: 0.65rem;
+  flex-shrink: 0;
+}
+
+.bs-side-label {
+  flex: 1;
+}
+
+.bs-chev {
+  width: 6px;
+  height: 6px;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: rotate(-45deg);
+  opacity: 0.45;
+  flex-shrink: 0;
+}
+
+.bs-side-item.active .bs-chev {
+  opacity: 0.85;
+}
+
+.bs-sidebar-foot {
+  padding-top: 1rem;
+  border-top: 1px dashed var(--bs-line);
+  font-size: 0.78rem;
+}
+
+.bs-foot-h {
+  margin: 0;
+  color: var(--bs-ink-soft);
+}
+
+.bs-foot-time {
+  margin: 4px 0 10px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: var(--bs-teal-dim);
+}
+
+.bs-back-link {
+  display: inline-block;
+  color: var(--bs-sky);
+  text-decoration: none;
+  font-size: 0.8rem;
+}
+
+.bs-back-link:hover {
+  text-decoration: underline;
+}
+
+/* —— 主列 —— */
+.bs-main-col {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 100vh;
+}
+
+.bs-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.1rem 1.75rem;
+  background: var(--bs-card);
+  border-bottom: 1px solid var(--bs-line);
+  box-shadow: var(--bs-shadow);
+}
+
+.bs-title {
+  margin: 0;
+  font-family: var(--bs-display);
+  font-size: clamp(1.05rem, 1.8vw, 1.35rem);
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  color: var(--bs-ink);
+}
+
+.bs-subtitle {
+  margin: 4px 0 0;
+  font-size: 0.82rem;
+  color: var(--bs-ink-soft);
+  line-height: 1.45;
+}
+
+.bs-user {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.bs-user-name {
+  font-size: 0.88rem;
+  color: var(--bs-ink-soft);
+}
+
+.bs-user-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: linear-gradient(145deg, var(--bs-sky), var(--bs-teal));
+  color: #fff;
+  font-size: 0.9rem;
+  font-weight: 600;
+  display: grid;
+  place-items: center;
+  box-shadow: 0 2px 10px rgba(13, 148, 136, 0.25);
+}
+
+.bs-content {
+  flex: 1;
+  padding: 1.25rem 1.75rem 2rem;
+  max-width: 1600px;
+}
+
+/* —— 通用卡片 —— */
+.bs-card {
+  background: var(--bs-card);
+  border-radius: var(--bs-radius);
+  box-shadow: var(--bs-shadow);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+}
+
+/* —— 筛选条 —— */
+.bs-filter-card {
+  overflow: hidden;
+  margin-bottom: 12px;
+}
+
+.bs-filter-head {
+  background: linear-gradient(95deg, var(--bs-teal) 0%, var(--bs-teal-dim) 42%, var(--bs-sky) 100%);
+  padding: 10px 16px 0;
+}
+
+.bs-filter-tabs {
+  display: flex;
+  gap: 4px;
+}
+
+.bs-ftab {
+  padding: 8px 18px 10px;
+  border: none;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.75);
+  font-family: inherit;
+  font-size: 0.86rem;
+  cursor: pointer;
+  border-radius: var(--bs-radius-sm) var(--bs-radius-sm) 0 0;
+  transition: color 0.2s, background 0.2s;
+}
+
+.bs-ftab:hover {
+  color: #fff;
+}
+
+.bs-ftab.active {
+  color: #fff;
+  font-weight: 600;
+  background: rgba(255, 255, 255, 0.2);
+  box-shadow: inset 0 -3px 0 #fff;
+}
+
+.bs-filter-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px 16px;
+  background: var(--bs-card);
+}
+
+.bs-select {
+  min-width: 140px;
+  padding: 9px 12px;
+  border: 1px solid var(--bs-line);
+  border-radius: var(--bs-radius-sm);
+  font-family: inherit;
+  font-size: 0.82rem;
+  color: var(--bs-ink);
+  background: #fafcfd;
+}
+
+.bs-filter-actions {
+  margin-left: auto;
+  display: flex;
+  gap: 10px;
+}
+
+.btn-bs {
+  padding: 9px 22px;
+  border-radius: var(--bs-radius-sm);
+  font-family: inherit;
+  font-size: 0.84rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: box-shadow 0.2s, transform 0.15s;
+}
+
+.btn-bs:active {
+  transform: translateY(1px);
+}
+
+.btn-bs-primary {
+  background: linear-gradient(135deg, var(--bs-teal), #14b8a6);
+  color: #fff;
+  box-shadow: 0 2px 10px rgba(13, 148, 136, 0.28);
+}
+
+.btn-bs-primary:hover {
+  box-shadow: var(--bs-shadow-hover);
+}
+
+.btn-bs-ghost {
+  background: #fff;
+  color: var(--bs-teal-dim);
+  border-color: var(--bs-teal);
+}
+
+.btn-bs-ghost:hover {
+  background: var(--bs-sky-soft);
+}
+
+.bs-tab-caption {
+  margin: 0 0 14px;
+  font-size: 0.8rem;
+  color: var(--bs-ink-soft);
+}
+
+/* KPI 行 */
+.bs-kpi-row {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 14px;
+  margin-bottom: 14px;
+}
+
+@media (max-width: 1200px) {
+  .bs-kpi-row {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 720px) {
+  .bs-app {
+    grid-template-columns: 1fr;
+  }
+
+  .bs-sidebar {
+    flex-direction: row;
+    flex-wrap: wrap;
+    border-right: none;
+    border-bottom: 1px solid var(--bs-line);
+  }
+
+  .bs-side-nav {
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 100%;
+  }
+
+  .bs-side-item {
+    border-radius: var(--bs-radius-sm);
+    flex: 1 1 auto;
+    min-width: 120px;
+  }
+
+  .bs-kpi-row,
+  .bs-metric-row {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.bs-kpi-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  background: var(--bs-card);
+  border-radius: var(--bs-radius);
+  box-shadow: var(--bs-shadow);
+  border: 1px solid rgba(13, 116, 128, 0.08);
+}
+
+.bs-kpi-ico {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--bs-radius-sm);
+  background: linear-gradient(135deg, rgba(13, 148, 136, 0.18), var(--bs-sky-soft));
+  color: var(--bs-teal-dim);
+  display: grid;
+  place-items: center;
+  font-size: 1rem;
+  flex-shrink: 0;
+}
+
+.bs-kpi-label {
+  display: block;
+  font-size: 0.75rem;
+  color: var(--bs-ink-soft);
+  margin-bottom: 4px;
+}
+
+.bs-kpi-val {
+  display: block;
+  font-size: clamp(1.15rem, 2vw, 1.45rem);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--bs-ink);
+  line-height: 1.15;
+}
+
+.bs-kpi-unit {
+  font-size: 0.65em;
+  font-weight: 600;
+  margin-left: 2px;
+}
+
+/* 次级指标 */
+.bs-metric-row {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 14px;
+  margin-bottom: 18px;
+}
+
+.bs-metric-card {
+  display: flex;
+  align-items: stretch;
+  min-height: 88px;
+  background: var(--bs-card);
+  border-radius: var(--bs-radius);
+  box-shadow: var(--bs-shadow);
+  border: 1px solid rgba(13, 116, 128, 0.06);
+  overflow: hidden;
+}
+
+.bs-metric-accent {
+  width: 4px;
+  flex-shrink: 0;
+  background: linear-gradient(180deg, var(--bs-sky), var(--bs-teal));
+}
+
+.bs-metric-body {
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.bs-metric-label {
+  font-size: 0.76rem;
+  color: var(--bs-ink-soft);
+  margin-bottom: 8px;
+}
+
+.bs-metric-val {
+  font-size: clamp(1.2rem, 2.1vw, 1.55rem);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--bs-ink);
+}
+
+/* 三列图表 */
+.bs-chart-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  margin-bottom: 18px;
+}
+
+@media (max-width: 1100px) {
+  .bs-chart-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .bs-metric-row {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.bs-chart-card {
+  padding: 16px 18px 20px;
+}
+
+.bs-chart-title {
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--bs-teal-dim);
+}
+
+.bs-chart-desc {
+  margin: 6px 0 12px;
+  font-size: 0.74rem;
+  color: var(--bs-ink-soft);
+  line-height: 1.4;
+}
+
+.bs-radar-wrap {
+  display: flex;
+  justify-content: center;
+  padding: 4px 0 8px;
+}
+
+.bs-radar {
+  width: min(220px, 100%);
+  height: auto;
+}
+
+.bs-radar-fill {
+  fill: rgba(14, 165, 233, 0.22);
+  stroke: none;
+}
+
+.bs-radar-stroke {
+  stroke: var(--bs-teal);
+  stroke-width: 1.5;
+}
+
+/* 折线图 */
+.bs-line-chart {
+  padding-bottom: 4px;
+}
+
+.bs-line-surface {
+  position: relative;
+  height: 160px;
+  border-radius: var(--bs-radius-sm);
+  background: linear-gradient(180deg, #f7fbfc, #f0f6f8);
+  border: 1px solid var(--bs-line);
+  overflow: hidden;
+}
+
+.bs-line-grid {
+  position: absolute;
+  inset: 0;
+  background-image: linear-gradient(rgba(13, 116, 128, 0.06) 1px, transparent 1px);
+  background-size: 100% 25%;
+}
+
+.bs-line-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.bs-line-path {
+  stroke: var(--bs-sky);
+  stroke-width: 0.9;
+  filter: drop-shadow(0 1px 2px rgba(14, 165, 233, 0.3));
+}
+
+.bs-line-tip {
+  position: absolute;
+  left: 52%;
+  top: 34%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+.bs-tip-dot {
+  display: block;
+  width: 10px;
+  height: 10px;
+  margin: 0 auto;
+  border-radius: 50%;
+  background: var(--bs-teal);
+  border: 2px solid #fff;
+  box-shadow: 0 2px 8px rgba(13, 148, 136, 0.4);
+}
+
+.bs-tip-bubble {
+  margin-top: 6px;
+  padding: 6px 10px;
+  background: #fff;
+  border-radius: var(--bs-radius-sm);
+  box-shadow: var(--bs-shadow);
+  font-size: 0.72rem;
+  text-align: center;
+  border: 1px solid var(--bs-line);
+}
+
+.bs-tip-bubble strong {
+  display: block;
+  color: var(--bs-teal-dim);
+  font-size: 0.95rem;
+}
+
+.bs-line-x {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 8px;
+  padding: 0 4px;
+  font-size: 0.68rem;
+  color: var(--bs-ink-soft);
+}
+
+/* 分布柱（柱高为轨道高度 × --h，避免父级无高度导致 % 失效变「一条平线」） */
+.bs-dist-chart {
+  display: flex;
+  align-items: stretch;
+  justify-content: space-between;
+  gap: 8px;
+  height: 172px;
+  padding: 8px 4px 4px;
+}
+
+.bs-dist-col {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 8px;
+  min-height: 0;
+  max-width: 56px;
+}
+
+.bs-dist-bar-wrap {
+  flex: 1 1 auto;
+  width: 100%;
+  min-height: 0;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.bs-dist-bar {
+  width: 100%;
+  max-width: 40px;
+  height: var(--h, 40%);
+  min-height: 12px;
+  border-radius: 6px 6px 0 0;
+  background: linear-gradient(180deg, rgba(14, 165, 233, 0.55), rgba(13, 148, 136, 0.25));
+  position: relative;
+  box-shadow: 0 -2px 12px rgba(13, 148, 136, 0.12);
+}
+
+.bs-dist-bar::after {
+  content: "";
+  position: absolute;
+  top: -4px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--bs-teal);
+  border: 2px solid #fff;
+  box-shadow: 0 2px 6px rgba(13, 148, 136, 0.35);
+}
+
+.bs-dist-col span {
+  font-size: 0.65rem;
+  color: var(--bs-ink-soft);
+  text-align: center;
+  line-height: 1.2;
+}
+
+/* 底部双栏 */
+.bs-bottom-row {
+  display: grid;
+  grid-template-columns: 1fr 1.35fr;
+  gap: 14px;
+  margin-bottom: 14px;
+}
+
+@media (max-width: 900px) {
+  .bs-bottom-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+.bs-panel-detail,
+.bs-chart-mixed {
+  padding: 14px 16px 16px;
+}
+
+.bs-panel-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 12px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--bs-line);
+}
+
+.bs-panel-head h3 {
+  margin: 0;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--bs-teal-dim);
+}
+
+.bs-chip {
+  font-size: 0.68rem;
+  color: var(--bs-ink-soft);
+  padding: 3px 8px;
+  border: 1px solid var(--bs-line);
+  border-radius: 999px;
+  background: #fafcfd;
+  white-space: nowrap;
+}
+
+.bs-vbars {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-around;
+  gap: 10px;
+  min-height: 200px;
+  padding: 16px 8px 8px;
+  border-radius: var(--bs-radius-sm);
+  background: linear-gradient(180deg, #f9fbfc, #f2f6f8);
+  border: 1px solid var(--bs-line);
+}
+
+.bs-vcol {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  max-width: 88px;
+}
+
+.bs-vbar {
+  width: 100%;
+  max-width: 48px;
+  border-radius: 6px 6px 0 0;
+  background: linear-gradient(180deg, var(--bs-sky), var(--bs-teal));
+  box-shadow: 0 4px 16px rgba(13, 148, 136, 0.2);
+  min-height: 10px;
+}
+
+.bs-vcol em {
+  font-style: normal;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--bs-teal-dim);
+  font-variant-numeric: tabular-nums;
+}
+
+.bs-vcol span {
+  font-size: 0.68rem;
+  color: var(--bs-ink-soft);
+  text-align: center;
+  line-height: 1.25;
+}
+
+/* 混合图 */
+.bs-mixed-surface {
+  position: relative;
+  height: 140px;
+  border-radius: var(--bs-radius-sm);
+  background: #f7fafb;
+  border: 1px solid var(--bs-line);
+  padding: 12px 12px 26px 36px;
+}
+
+.bs-mixed-grid {
+  position: absolute;
+  inset: 12px 12px 26px 36px;
+  background-image: linear-gradient(rgba(13, 116, 128, 0.06) 1px, transparent 1px);
+  background-size: 100% 20%;
+}
+
+.bs-bars-line {
+  position: relative;
+  z-index: 1;
+  height: 100%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 4px;
+}
+
+.bs-mbar {
+  flex: 1;
+  border-radius: 4px 4px 0 0;
+  background: linear-gradient(180deg, rgba(14, 165, 233, 0.35), rgba(13, 148, 136, 0.12));
+  border: 1px solid rgba(13, 148, 136, 0.2);
+  align-self: flex-end;
+}
+
+.bs-line-overlay {
+  position: absolute;
+  inset: 12px 12px 26px 36px;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.bs-line-overlay svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.bs-mixed-line {
+  stroke: var(--bs-teal);
+  stroke-width: 0.5;
+  opacity: 0.95;
+}
+
+.bs-x-labels {
+  display: flex;
+  justify-content: space-between;
+  padding: 6px 12px 0 36px;
+  font-size: 0.65rem;
+  color: var(--bs-ink-soft);
+}
+
+/* 复制评估条 */
+.bs-repl-card {
+  padding: 14px 16px 18px;
+  margin-bottom: 8px;
+}
+
+.bs-hbars {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.bs-hrow {
+  display: grid;
+  grid-template-columns: minmax(100px, 1.4fr) 2fr 36px;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.76rem;
+}
+
+.bs-hrow span:first-child {
+  color: var(--bs-ink-soft);
+}
+
+.bs-htrack {
+  height: 10px;
+  border-radius: 5px;
+  background: rgba(13, 116, 128, 0.08);
+  overflow: hidden;
+  border: 1px solid var(--bs-line);
+}
+
+.bs-hfill {
+  height: 100%;
+  border-radius: 5px;
+  background: linear-gradient(90deg, var(--bs-teal-dim), var(--bs-sky));
+  transition: width 1s ease-out;
+}
+
+.bs-hrow strong {
+  text-align: right;
+  font-weight: 700;
+  color: var(--bs-teal-dim);
+  font-variant-numeric: tabular-nums;
+}
+
+.bs-footnote {
+  text-align: center;
+  font-size: 0.74rem;
+  color: var(--bs-ink-soft);
+  line-height: 1.55;
+  margin: 8px 0 0;
+}
+
+.bs-footnote strong {
+  color: var(--bs-teal-dim);
+  font-weight: 600;
+}

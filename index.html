@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>银发乡播・AI 适老化大数据服务看板（公益轻量版）</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;600;700&family=ZCOOL+XiaoWei&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <div class="watercolor-bg" aria-hidden="true"></div>
+  <div class="grain" aria-hidden="true"></div>
+
+  <aside class="sidebar">
+    <div class="brand">
+      <span class="brand-mark">◉</span>
+      <div>
+        <strong>银发乡播・AI 适老化大数据服务看板</strong>
+        <small>公益轻量版 · 青韵馨香试点台账</small>
+      </div>
+    </div>
+    <nav class="nav" id="mainNav">
+      <button type="button" class="nav-item active" data-section="talent">
+        <span class="dot"></span>银发主播成长
+      </button>
+      <button type="button" class="nav-item" data-section="media">
+        <span class="dot"></span>新媒体流量 AI
+      </button>
+      <button type="button" class="nav-item" data-section="commerce">
+        <span class="dot"></span>电商透明对账
+      </button>
+      <button type="button" class="nav-item" data-section="tourism">
+        <span class="dot"></span>农文旅运营
+      </button>
+      <button type="button" class="nav-item" data-section="replicate">
+        <span class="dot"></span>村庄适配度评估
+      </button>
+      <button type="button" class="nav-item" data-section="screen">
+        <span class="dot"></span>可视化总控大屏
+      </button>
+      <button type="button" class="nav-item" data-section="security">
+        <span class="dot"></span>隐私与安全合规
+      </button>
+      <a href="bigscreen.html" class="nav-bigscreen-entry">路演总控大屏（新页 · 管理台布局）</a>
+    </nav>
+    <div class="sidebar-foot">
+      <p class="muted">数据来源 · 本地同步时钟</p>
+      <p id="syncTime">--</p>
+      <p class="muted tiny sidebar-data-note">
+        Excel / 台账 + 视频号后台摘录；流量与订单可走官方免费 API · 不向老人采集操作行为
+      </p>
+    </div>
+  </aside>
+
+  <main class="main">
+    <header class="topbar">
+      <div>
+        <h1 id="pageTitle">银发人才成长管理中心</h1>
+        <p class="subtitle" id="pageDesc">
+          青韵馨香实践团 · 延庆大庄科乡及周边 · 一人一档 · 微信视频号台账与六阶成长视图
+        </p>
+      </div>
+      <div class="topbar-actions">
+        <span class="badge badge-soft">大庄科乡 · 香营乡等</span>
+        <span class="badge badge-strong">真实台账样本</span>
+      </div>
+    </header>
+
+    <!-- 板块一 · 银发主播成长 -->
+    <section class="panel active" id="panel-talent" data-panel="talent">
+      <div class="grid stats-4">
+        <article class="card stat">
+          <h3>重点跟踪账号</h3>
+          <p class="big">10</p>
+          <span class="hint">《村民账号信息》台账 · 前 10 重点账号</span>
+        </article>
+        <article class="card stat">
+          <h3>六阶均值进度</h3>
+          <p class="big">68%</p>
+          <span class="hint">多数已过拍摄剪辑 · 直播与变现补强中</span>
+        </article>
+        <article class="card stat stat-warn">
+          <h3>运营预警</h3>
+          <p class="big">4</p>
+          <span class="hint">直播留人 · 完播率 · 政策类题材需陪练</span>
+        </article>
+        <article class="card stat">
+          <h3>原创内容累计</h3>
+          <p class="big">612</p>
+          <span class="hint">台账内有填报「原创视频数」字段的行合计（前 10 账号）</span>
+        </article>
+      </div>
+
+      <article class="card profile-archive-card">
+        <header class="archive-head">
+          <div>
+            <h2 class="card-title flush">一人一档数字画像</h2>
+            <p class="muted small no-mt">
+              青韵馨香实践团 · 延庆区大庄科乡及周边银发新农台账：以下为视频号公开昵称与内部建档编号（姓名已略）。
+            </p>
+          </div>
+          <div class="archive-toolbar">
+            <label class="search-wrap">
+              <span class="sr-only">检索档案</span>
+              <input type="search" id="talentProfileSearch" class="profile-search" placeholder="按昵称或编号检索…" autocomplete="off" />
+            </label>
+          </div>
+        </header>
+        <div id="talentProfiles" class="profile-grid" aria-live="polite"></div>
+        <p class="muted tiny foot-note">
+          已与周播报、单次爆款、创作分成与直播收入等字段对齐；后续可接入学时、橱窗订单与结对帮扶闭环。
+        </p>
+      </article>
+
+      <div class="grid two">
+        <article class="card">
+          <h2 class="card-title">六阶成长可视化</h2>
+          <div class="stages">
+            <div class="stage done"><span>1</span>入门认知</div>
+            <div class="stage done"><span>2</span>拍摄剪辑</div>
+            <div class="stage current"><span>3</span>直播基础</div>
+            <div class="stage"><span>4</span>AIGC 应用</div>
+            <div class="stage"><span>5</span>IP 打造</div>
+            <div class="stage"><span>6</span>种子讲师</div>
+          </div>
+          <div class="progress-water">
+            <div class="fill" style="width:58%"></div>
+          </div>
+          <p class="muted small">台账小结：短视频更新已稳定 · 集体短板在直播预热、前 3 秒钩子与完播率（参见总结章）。</p>
+        </article>
+
+        <article class="card">
+          <h2 class="card-title">三级活跃度预警</h2>
+          <ul class="alert-list">
+            <li><em class="tag yellow">7 天</em>未活跃 · 提醒</li>
+            <li><em class="tag orange">15 天</em>未发布 · 橙色预警</li>
+            <li><em class="tag red">30 天</em>直播/发布缺失 · 严重</li>
+          </ul>
+          <p class="muted small">实践团与村委可据此触发结对陪练（尤其直播场观偏低、Policy 类稿件互动异常账号）。</p>
+        </article>
+      </div>
+
+      <div class="grid two">
+        <article class="card">
+          <h2 class="card-title">片区账号关系示意（台账）</h2>
+          <div class="viz nodes">
+            <div class="node volunteer">青韵馨香实践团</div>
+            <span class="link"></span>
+            <div class="pair">
+              <div class="node">沙门村矩阵（4 号）</div>
+              <div class="node">八道河 · 下花园</div>
+            </div>
+          </div>
+          <button type="button" class="btn btn-ghost">导出《种子讲师带教报告》</button>
+        </article>
+
+        <article class="card">
+          <h2 class="card-title">银发主播成长月报（4 月下旬 — 5 月上旬）</h2>
+          <div class="radar-placeholder doc-month-wrap">
+            <svg viewBox="0 0 200 200" class="radar-svg" aria-hidden="true">
+              <polygon points="100,35 158,72 158,138 100,172 42,138 42,72" fill="rgba(13,148,136,0.08)" stroke="rgba(13,148,136,0.45)" stroke-width="1"/>
+              <polygon points="100,55 143,82 143,133 100,157 58,133 58,82" fill="rgba(14,165,233,0.12)" stroke="rgba(14,165,233,0.65)" stroke-width="1.5"/>
+            </svg>
+            <p class="center-label">台账小结 · 与 Word 总结章对齐</p>
+            <ul class="doc-month-bullets muted small">
+              <li>培训初见成效：多账号稳定原创、部分已获创作分成与激励（如祁嫂子优质原创、柳书记周播 13.75 万次级）。</li>
+              <li>共性短板：完播率不高、直播引流与留人偏弱、短视频与直播联动不足。</li>
+              <li>主观线：核桃 / 栗子 / 香椿 / 柴鸡蛋出村 + 「乡村振兴主播团」「美丽延庆我代言」话题积淀。</li>
+            </ul>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- 板块二 -->
+    <section class="panel" id="panel-media" data-panel="media">
+      <div class="grid stats-4">
+        <article class="card stat">
+          <h3>主阵地</h3>
+          <p class="big">视频号</p>
+          <span class="hint">创作分成计划 · 直播数据后台</span>
+        </article>
+        <article class="card stat">
+          <h3>头部账号周播（样例）</h3>
+          <p class="big">13.75万</p>
+          <span class="hint">柳艳云 4/27—6/12 周期 · 137474 次</span>
+        </article>
+        <article class="card stat">
+          <h3>单条播放峰值（样例）</h3>
+          <p class="big">8.26万</p>
+          <span class="hint">春娥姐近期样本 · 82637 次 · 《村民账号信息》</span>
+        </article>
+        <article class="card stat">
+          <h3>同类排名</h3>
+          <p class="big score-ok">前15%</p>
+          <span class="hint">胖嫂子周播超 57.93% 同类作品</span>
+        </article>
+      </div>
+
+      <div class="grid two">
+        <article class="card">
+          <h2 class="card-title">选题标签云（台账高频词）</h2>
+          <div class="tag-cloud">
+            <span class="accent">香椿</span><span>核桃</span><span>栗子</span>
+            <span class="accent">柴鸡蛋</span><span>家人们</span><span>延庆</span>
+            <span class="accent">乡村振兴主播团</span><span>美丽延庆我代言</span>
+            <span>农忙</span><span>大山</span><span>反诈提醒</span>
+          </div>
+          <p class="muted small">台账建议：紧盯农事节点（如香椿季）与在地景观；政策类、农技类需控制完播与互动结构。</p>
+        </article>
+        <article class="card">
+          <h2 class="card-title">培训与运营动作（实践团）</h2>
+          <table class="table simple">
+            <thead><tr><th>模块</th><th>台账描述</th><th>当前短板</th></tr></thead>
+            <tbody>
+              <tr><td>拍摄 · 剪辑</td><td>小班实训 · 稳定周更</td><td>开头吸引力 · 节奏</td></tr>
+              <tr><td>直播</td><td>多场开播记录</td><td>预热不足 · 场观与留人</td></tr>
+              <tr><td>变现</td><td>创作分成到账</td><td>橱窗 / 直播带货联动</td></tr>
+            </tbody>
+          </table>
+        </article>
+      </div>
+
+      <article class="card">
+        <h2 class="card-title">台账摘录 · 核心指标一览（视频号后台）</h2>
+        <p class="muted small no-mt-gap">统计窗含 4 月 27 日—6 月 12 日等片段，与 Word 表格一致；点击侧栏切换板块不影响本表。</p>
+        <div class="table-scroll">
+          <table class="table tourism-table compact">
+            <thead>
+              <tr>
+                <th>账号</th>
+                <th>属地</th>
+                <th>原创条数</th>
+                <th>代表数据（摘录）</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>沙门村的胖嫂子</strong></td>
+                <td>大庄科乡沙门村</td>
+                <td>24</td>
+                <td>赞 4173 / 收藏 3147 · 台账近期样本播放 8803 / 7549 · 《村民账号信息》</td>
+              </tr>
+              <tr>
+                <td><strong>沙门郭大嫂</strong></td>
+                <td>大庄科乡沙门村</td>
+                <td>109</td>
+                <td>赞 9624 / 收藏 8115 · 台账样本播放 10998 / 8828 · 历史单场直播获赞 1000+（摘录）</td>
+              </tr>
+              <tr>
+                <td><strong>沙门村的祁嫂子</strong></td>
+                <td>大庄科乡沙门村</td>
+                <td>73</td>
+                <td>赞 9160 / 收藏 6555 · 台账样本播放 4105 / 1605 · 香椿季优质原创激励（历史摘录）</td>
+              </tr>
+              <tr>
+                <td><strong>大山里的春娥姐</strong></td>
+                <td>大庄科乡沙门村</td>
+                <td>43</td>
+                <td>台账样本峰值播放 62637（另一条样本 56110）· 《村民账号信息》</td>
+              </tr>
+              <tr>
+                <td><strong>柳艳云（村书记号）</strong></td>
+                <td>香营乡八道河村</td>
+                <td>141</td>
+                <td>周播 137474 · 评论 1240 / 分享 501 · 分成累计 ¥333.68 · 直播 ¥18.95</td>
+              </tr>
+              <tr>
+                <td><strong>延龙寻路（李小琴）</strong></td>
+                <td>大庄科乡下花园村</td>
+                <td>13</td>
+                <td>赞 1934 / 收藏 1241 · 台账样本播放 140 / 883 · 第一书记政策向 · 《村民账号信息》</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </article>
+    </section>
+
+    <!-- 板块三 -->
+    <section class="panel" id="panel-commerce" data-panel="commerce">
+      <div class="grid stats-4">
+        <article class="card stat">
+          <h3>创作分成（可查·样例）</h3>
+          <p class="big">¥333.68</p>
+          <span class="hint">视频号创作分成计划累计（5月10日前）</span>
+        </article>
+        <article class="card stat">
+          <h3>直播收入（样例）</h3>
+          <p class="big">¥218.95</p>
+          <span class="hint">与分成分类统计</span>
+        </article>
+        <article class="card stat stat-highlight">
+          <h3>农户侧分成（样例）</h3>
+          <p class="big">¥27.61</p>
+          <span class="hint">含优质原创激励 19.03</span>
+        </article>
+        <article class="card stat">
+          <h3>文档期合计</h3>
+          <p class="big">¥552.63</p>
+          <span class="hint">未含其他账号潜在分成</span>
+        </article>
+      </div>
+
+      <article class="card">
+        <h2 class="card-title">带货主品类（台账·农产品）</h2>
+          <ol class="rank">
+            <li><span class="pill">核桃</span> <strong>沙门村矩阵主营</strong></li>
+            <li><span class="pill">栗子</span> <strong>多账号反复出镜</strong></li>
+            <li><span class="pill">香椿</span> <strong>季节爆款题材</strong></li>
+            <li><span class="pill">柴鸡蛋</span> <strong>同城兴趣转化</strong></li>
+          </ol>
+          <hr class="soft" />
+          <p class="muted small">当前增收以视频号「创作分成 + 激励」为主；小店成交明细待与村集体对公对账模块接通后展示。</p>
+        </article>
+    </section>
+
+    <!-- 板块四 -->
+    <section class="panel" id="panel-tourism" data-panel="tourism">
+      <div class="tourism-intro">
+        <div class="ribbon">农文旅演示数据 · 与新媒体真实台账区分</div>
+        <p class="muted small tourism-tagline">
+          本节 KPI、路线表与活动表为<strong>版面演示用虚拟数</strong>，便于汇报排版预览；精细化经营仍以核销与问卷系统接入后为准。
+        </p>
+      </div>
+
+      <div class="grid two">
+        <article class="card stat">
+          <h3>内容侧·景观题材</h3>
+          <p class="big">花海季</p>
+          <span class="hint">台账视频：大美延庆赏樱花等</span>
+        </article>
+        <article class="card stat">
+          <h3>满意度</h3>
+          <p class="big score-ok">4.63</p>
+          <span class="hint">五分制 · 演示样本 N=186</span>
+        </article>
+      </div>
+
+      <article class="card">
+        <h2 class="card-title">客源地分布热力（示意）</h2>
+        <p class="muted small">演示：假定线下客源与短视频兴趣结构大致同向——城区家庭偏高、研学团次之（数据为虚构）。</p>
+        <div class="heat-three">
+          <div class="heat-col">
+            <span class="heat-label">短视频互动（城区兴趣）</span>
+            <div class="heat-track"><i class="heat-fill" style="--p:82%"></i></div>
+            <span class="heat-val">演示 82% · 香椿 / 樱花 / 农家院</span>
+          </div>
+          <div class="heat-col">
+            <span class="heat-label">同城 / 邻省自驾</span>
+            <div class="heat-track"><i class="heat-fill heat-school" style="--p:64%"></i></div>
+            <span class="heat-val">演示 64% · 周末单量级放大的假说</span>
+          </div>
+          <div class="heat-col">
+            <span class="heat-label">研学 / 机构团</span>
+            <div class="heat-track"><i class="heat-fill heat-enterprise" style="--p:36%"></i></div>
+            <span class="heat-val">演示 36% · 春秋季预约为主</span>
+          </div>
+        </div>
+        <div class="heat-mini-map" role="img" aria-label="片区示意图">
+          <span class="blob b1"></span><span class="blob b2"></span><span class="blob b3"></span>
+          <span class="pin core">沙门村</span>
+          <span class="pin side">燕羽山</span>
+          <span class="pin side s2">八道河村</span>
+        </div>
+        <p class="muted tiny">地理锚点来自台账村庄名称；非精确的 GIS 客流。</p>
+      </article>
+
+      <article class="card">
+        <h2 class="card-title">活动效果对标评估</h2>
+        <p class="muted small">
+          以下为<strong>演示用活动台账</strong>（人次与金额为虚构）；与真实新媒体分成对账请仍以「电商透明对账」为准。
+        </p>
+
+        <div class="award-strip">
+          <div class="award-card money">
+            <span class="award-badge">台账侧亮点</span>
+            <h3>农事季节内容</h3>
+            <p class="award-name">香椿季 · 山区春播与采收（视频侧）</p>
+            <ul class="award-meta">
+              <li>代表选题 <strong>#五一前后出售香椿了</strong> 等</li>
+              <li>单条分成样例 <strong>¥ 3.08</strong>（祁嫂子）</li>
+              <li>同城分享与订阅曝光占比可在后台导出</li>
+            </ul>
+          </div>
+          <div class="award-card heart">
+            <span class="award-badge badge-pop">传播侧</span>
+            <h3>乡村景观与共情表达</h3>
+            <p class="award-name">大美延庆赏樱花 · 家门口繁华似锦</p>
+            <ul class="award-meta">
+              <li>郭大嫂「家人们」口语人设 · 强亲切感</li>
+              <li>春娥姐结合 <strong>反诈提醒</strong> 与乡村自豪议题</li>
+              <li>完整活动票务增收 <strong>待二期录入</strong></li>
+            </ul>
+          </div>
+        </div>
+
+        <p class="muted tiny">权重与排序规则可后台配置；当前为演示数据，不承担审计含义。</p>
+      </article>
+
+      <div class="grid two">
+        <article class="card future-card">
+          <h2 class="card-title">淡旺季客流 AI 预测与排期建议</h2>
+          <span class="phase-tag">演示 · 二期</span>
+          <p class="muted small">
+            基于<strong>一年以上</strong>核销与票务时序数据，识别淡旺季窗口并<strong>提前约两月</strong>推送主题活动排期，填补空置档期；思路对齐「平湖数智生活馆」式精准服务排期。
+          </p>
+          <div class="season-bars">
+            <div><span class="sn">淡季</span><div class="bar-bg"><i class="bar-in low" style="width:38%"></i></div><span class="sx">次年 2–3 月</span></div>
+            <div><span class="sn">平季</span><div class="bar-bg"><i class="bar-in mid" style="width:62%"></i></div><span class="sx">11 月 · 梅雨周</span></div>
+            <div><span class="sn">旺季</span><div class="bar-bg"><i class="bar-in high" style="width:94%"></i></div><span class="sx">五一 / 国庆 / 寒暑假</span></div>
+          </div>
+          <div class="suggest-list">
+            <h4>建议排期（示例推送）</h4>
+            <ul>
+              <li><time datetime="2027-01">72 天内</time>预热「冬季<strong>村味年俗节</strong>」，联动年货直播与乡贤食堂套餐。</li>
+              <li><time datetime="2027-03">约 55 天内</time>占位「春季<strong>香草体验月</strong>」，提前锁企事业党建 + 职教园实训团档期。</li>
+              <li>预留两个「空白周六」承办跨村导流团单，避免与同镇兄弟村活动撞期。</li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="card cross-village-card">
+          <h2 class="card-title">跨村账号矩阵（台账真实）</h2>
+          <p class="muted small">
+            同一项目内覆盖<strong>大庄科乡沙门村</strong>（四条视频号）与<strong>香营乡八道河村</strong>村书记号、<strong>下花园村</strong>第一书记号等，导流与联营分成<strong>未在本 Excel 载明</strong>。
+          </p>
+          <div class="cross-flow">
+            <div class="cv-node hub">
+              <strong>沙门村 · 视频矩阵</strong>
+              <span class="cv-sub">胖嫂子 · 郭大嫂 · 祁嫂子 · 春娥姐</span>
+              <span class="cv-num">16 账号台账原创合计 612 条 · 矩阵五账号合计 160 条（Excel 填报）</span>
+            </div>
+            <div class="cv-arrows">
+              <div class="cv-edge">
+                <span>台账 →</span><strong>延庆区香营乡八道河村</strong>
+                <span class="cv-mini">柳艳云 · 131 条原创 · 周播曾达 13.75 万次</span>
+              </div>
+              <div class="cv-edge">
+                <span>台账 →</span><strong>大庄科乡下花园村</strong>
+                <span class="cv-mini">第一书记账号「延龙寻路」· 政策宣传向</span>
+              </div>
+            </div>
+          </div>
+          <div class="flow-benefit">
+            <p><strong>说明</strong>：跨村访客核销与联营池属二期；当前页面仅对齐新媒体台账与分成样例。</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- 板块五 -->
+    <section class="panel" id="panel-replicate" data-panel="replicate">
+      <div class="repl-intro">
+        <div class="ribbon">对齐《智赋银龄》报告 · AHP 三级体系 · 以下为网页演示</div>
+        <p class="muted small repl-tagline">
+          目标层为<strong>乡村助农模式村庄适配度综合评价</strong>；准则层四类、指标层 <strong>C1–C12</strong>（报告表 7）。首卡为公式与说明；次卡为
+          <strong>A–F–RVCPM 四象限耦合图</strong>；其下按村展示<strong>柱形图 + 明细表 + 帮扶</strong>。滑条区为单村情景推演。
+        </p>
+      </div>
+
+      <article class="card rvcpm-head-card">
+        <h2 class="card-title flush">《智赋银龄》· 指标体系与耦合公式</h2>
+        <p class="muted small no-mt">
+          准则层四类（报告第二章）：<strong>人口适配度、资源适配度、基础条件适配度、组织与外部支持</strong>；对应二级指标 <strong>C1–C12</strong>（表 7 分级）。
+          下图二为资源—可行性耦合气泡图（研学评估矩阵同款结构）；下部为<strong>每个村</strong>单独展开：四维准则 + <strong>C1–C12 柱状可视化</strong> + 明细表 + 未达标<strong>帮扶</strong>清单。
+        </p>
+        <details class="rvcpm-formula-details">
+          <summary>展开：A / F / RVCPM 计算公式</summary>
+          <div class="rvcpm-formula-body muted small">
+            <p>设 <span class="mono">C<sub>i</sub>′ = C<sub>i</sub> / 100</span>（将表 7 换算到 0–1）。</p>
+            <p>
+              <strong>资源吸引力</strong> <span class="mono">A = 0.35·C4′ + 0.35·C5′ + 0.30·C6′</span>
+            </p>
+            <p>
+              <strong>落地可行性</strong> <span class="mono">F = 0.25·C7′ + 0.25·C8′ + 0.15·C9′ + 0.20·C10′ + 0.15·C11′</span>
+            </p>
+            <p>
+              <strong>耦合势能</strong> <span class="mono">RVCPM = √(A² + F²)</span>；气泡半径按各村 RVCPM 相对<strong>本片最大值</strong>归一。
+            </p>
+            <p class="tiny footnote-formula">C1–C3、C12 计入各村民政教育侧综合呈现与帮扶规则；与 A/F 并联展示。完整权重以 AHP 一致性检验后的矩阵为准。</p>
+          </div>
+        </details>
+      </article>
+
+      <article class="card rvcpm-chart-card">
+        <h3 class="card-title flush village-h3-inline">资源—运营可行性 · 四象限耦合图</h3>
+        <p class="muted tiny no-mt-gap">横轴 <strong>F</strong>（可行性）· 纵轴 <strong>A</strong>（资源吸引力）；红线 0.5 为象限界。点击气泡跳转至该村卡片。</p>
+        <div class="rvcpm-chart-wrap" id="rvcpmMatrixHost"></div>
+        <ul class="rvcpm-quad-legend muted tiny">
+          <li><span class="q q-star"></span><strong>明星区</strong> A、F 均高 · 优先推广</li>
+          <li><span class="q q-pot"></span><strong>潜力区</strong> 资源足、可行性待补 · 专项帮扶基建与执行</li>
+          <li><span class="q q-opp"></span><strong>机会区</strong> 条件好、资源待养 · 可做配套或二批试点</li>
+          <li><span class="q q-edge"></span><strong>边缘区</strong> 双低 · <strong>重点帮扶</strong>与实地踏勘</li>
+        </ul>
+      </article>
+
+      <div class="village-cards-host" id="villageCardsHost" aria-label="各村二级指标与帮扶"></div>
+      <div class="grid repl-top-grid">
+        <article class="card repl-form-card">
+          <h2 class="card-title">目标村快速情景推演（10 项 · 可对标映射 C1–C12）</h2>
+          <p class="muted small no-mt-gap">
+            完整模型为报告中的<strong>十二项二级指标 + 一致性检验后的 AHP 权重</strong>。本页滑条为 0–10 情景演示（老龄化为 raw%），
+            供答辩现场手动调节；后台可将同一字段与问卷 / 台账批量对账。
+          </p>
+          <form id="replEvalForm" class="repl-metrics">
+            <label class="metric-row"><span class="metric-name">老龄化率 · 适龄银发参与度参考</span><span class="metric-val"><output id="mAgeOut">26</output>%</span></label>
+            <input type="range" name="aging" id="mAging" class="repl-range" min="15" max="42" step="1" value="26" />
+
+            <label class="metric-row"><span class="metric-name">① 人口规模与市场腹地指数</span><span class="metric-val"><output id="mPopOut">6</output> /10</span></label>
+            <input type="range" name="pop" id="mPop" class="repl-range" min="0" max="10" step="1" value="6" />
+
+            <label class="metric-row"><span class="metric-name">② 红色文化 / 叙事资源</span><span class="metric-val"><output id="mRedOut">7</output> /10</span></label>
+            <input type="range" name="red" id="mRed" class="repl-range" min="0" max="10" step="1" value="7" />
+
+            <label class="metric-row"><span class="metric-name">③ 非遗与传统手艺禀赋</span><span class="metric-val"><output id="mHerOut">6</output> /10</span></label>
+            <input type="range" name="heritage" id="mHer" class="repl-range" min="0" max="10" step="1" value="6" />
+
+            <label class="metric-row"><span class="metric-name">④ 高价值农产品与品牌化基础</span><span class="metric-val"><output id="mAgOut">7</output> /10</span></label>
+            <input type="range" name="agri" id="mAg" class="repl-range" min="0" max="10" step="1" value="7" />
+
+            <label class="metric-row"><span class="metric-name">⑤ 自然景观与环线联动潜力</span><span class="metric-val"><output id="mNatOut">5</output> /10</span></label>
+            <input type="range" name="nature" id="mNat" class="repl-range" min="0" max="10" step="1" value="5" />
+
+            <label class="metric-row"><span class="metric-name">⑥ 村两委积极性（结构化量表折算）</span><span class="metric-val"><output id="mComOut">8</output> /10</span></label>
+            <input type="range" name="committee" id="mCom" class="repl-range" min="0" max="10" step="1" value="8" />
+
+            <label class="metric-row"><span class="metric-name">⑦ 宽带与移动网络稳定性</span><span class="metric-val"><output id="mNetOut">6</output> /10</span></label>
+            <input type="range" name="network" id="mNet" class="repl-range" min="0" max="10" step="1" value="6" />
+
+            <label class="metric-row"><span class="metric-name">⑧ 物流配送与冷链可达性</span><span class="metric-val"><output id="mLogOut">5</output> /10</span></label>
+            <input type="range" name="logistics" id="mLog" class="repl-range" min="0" max="10" step="1" value="5" />
+
+            <label class="metric-row"><span class="metric-name">⑨ 村集体 / 合作社运营成熟度</span><span class="metric-val"><output id="mOrgOut">6</output> /10</span></label>
+            <input type="range" name="org" id="mOrg" class="repl-range" min="0" max="10" step="1" value="6" />
+
+            <label class="metric-row"><span class="metric-name">⑩ 乡贤 / 青年志愿者供给</span><span class="metric-val"><output id="mVolOut">7</output> /10</span></label>
+            <input type="range" name="volunteer" id="mVol" class="repl-range" min="0" max="10" step="1" value="7" />
+
+            <div class="repl-form-actions">
+              <button type="button" id="replResetDemo" class="btn btn-ghost">恢复演示默认值</button>
+            </div>
+          </form>
+        </article>
+
+        <article class="card repl-result-card">
+          <h2 class="card-title">综合适配度 · 雷达图（六项合成轴）</h2>
+          <div class="repl-score-banner">
+            <div class="score-ring repl-ring-small">
+              <svg viewBox="0 0 120 120" aria-hidden="true">
+                <circle cx="60" cy="60" r="52" fill="none" stroke="rgba(13,148,136,0.12)" stroke-width="10"/>
+                <circle id="replRingFg" cx="60" cy="60" r="52" fill="none" stroke="url(#gradRepl)" stroke-width="10"
+                  stroke-dasharray="326.7" stroke-dashoffset="84" stroke-linecap="round" transform="rotate(-90 60 60)"/>
+                <defs>
+                  <linearGradient id="gradRepl" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#0ea5e9"/><stop offset="100%" stop-color="#0d9488"/>
+                  </linearGradient>
+                </defs>
+              </svg>
+              <span class="ring-label" id="replScoreNum">74</span>
+            </div>
+            <div class="repl-score-meta">
+              <p class="repl-score-big"><span id="replScoreHue">中高适配</span></p>
+              <p class="muted small">六项轴由滑条分组合成，仅供演示；正式评分以全村填报的 C1–C12 经 AHP 加权求和为准。</p>
+            </div>
+          </div>
+          <figure class="radar-figure">
+            <svg id="replRadarSvg" viewBox="0 0 280 260" role="img" aria-labelledby="replRadarCaption">
+              <title id="replRadarCaption">目标村评估雷达图示意</title>
+              <g opacity="0.35" stroke="rgba(13,116,128,0.35)" stroke-width="1" fill="none">
+                <polygon id="radarGrid20" />
+                <polygon id="radarGrid40" />
+                <polygon id="radarGrid60" />
+                <polygon id="radarGrid80" />
+              </g>
+              <polygon id="radarArea" fill="rgba(13,148,136,0.12)" stroke="rgba(13,148,136,0.85)" stroke-width="2"/>
+              <polygon id="radarStrokeAssist" fill="none" stroke="rgba(14,165,233,0.55)" stroke-width="1.2" stroke-dasharray="5 6"/>
+              <g id="radarLabels" class="radar-axis-labels" fill="#4a6275"></g>
+            </svg>
+          </figure>
+          <ul class="radar-legend compact-legend muted small" id="radarLegend"></ul>
+        </article>
+      </div>
+
+      <article class="card repl-cost-card">
+        <h2 class="card-title">推广落地成本与周期自动估算</h2>
+        <p class="muted small">
+          基于<strong>已成功落地试点村</strong>的历史台账：培训人天、灯组支架包、入网补贴一次项、轻量数据环境与驻场巡检的区间成本，自动汇总目标推演（不含「数据中台」类重型建设）。
+        </p>
+        <div class="grid repl-cost-split">
+          <div class="cost-table-wrap">
+            <table class="table tourism-table compact">
+              <thead>
+                <tr>
+                  <th>成本类目</th>
+                  <th>说明</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>分层培训与小班复训</td>
+                  <td>含讲师课酬、教具包、差旅补贴</td>
+                </tr>
+                <tr>
+                  <td>基础设备（补光灯 + 支架 + 麦克风）</td>
+                  <td>按 20–35 套装车</td>
+                </tr>
+                <tr>
+                  <td>网络提速与热点补贴</td>
+                  <td>专线备选 + 4G/5G 应急</td>
+                </tr>
+                <tr>
+                  <td>本地看板 / 权限初始化</td>
+                  <td>SQLite + 静态页 / Metabase，无专有数据中台</td>
+                </tr>
+                <tr>
+                  <td>运营与数据巡检月费</td>
+                  <td>前两年公益补贴后可阶梯调价</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <aside class="cycle-estimate">
+            <h3>首笔电商 / 橱窗增收周期</h3>
+            <p class="cycle-big" id="replCycleMonths">约 4.2 个月</p>
+            <p class="muted small">取自历史推广案例的 <strong>P25–P75</strong>：<span id="replCycleBand">最短 3.1 个月 · 较慢 6.0 个月</span>。</p>
+            <p class="muted tiny no-mb">可调参：两委得分、物流分项、往期同镇样板村周期 Bayesian 校准（二期后端）。</p>
+          </aside>
+        </div>
+      </article>
+
+      <div class="grid two">
+        <article class="card repl-bench-card">
+          <h2 class="card-title">多村效能横比排行</h2>
+          <p class="muted small">
+            下列三行来自本次台账中<strong>可查分成</strong>；指数按条数、播放与变现摘录综合排序（非模型回写）。
+          </p>
+          <div class="table-scroll">
+            <table class="table tourism-table compact" id="villageBenchTable">
+              <thead>
+                <tr>
+                  <th>序</th>
+                  <th>村庄</th>
+                  <th>台账内账号数</th>
+                  <th>可查增收摘录</th>
+                  <th>周更 / 条数</th>
+                  <th>综合指数</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </article>
+
+        <article class="card repl-kb-card">
+          <h2 class="card-title">跨村推广问题共享库 · 关键词检索</h2>
+          <p class="muted small">沉淀他村踩坑与<strong>已验证方案</strong>，支持村委与运营专员边搜边复盘，服务跨村落地决策。</p>
+          <label class="kb-search-row">
+            <span class="sr-only">检索问题库</span>
+            <input type="search" id="replKbSearch" class="profile-search kb-input" placeholder="试搜：积极性、冷链、话术、回款…" autocomplete="off" />
+          </label>
+          <div id="replKbList" class="kb-list" role="list"></div>
+          <p class="muted tiny no-mb">1.0 支持关键词与子串匹配；二期可挂载向量检索与工单闭环关联。</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- 板块六大屏 -->
+    <section class="panel" id="panel-screen" data-panel="screen">
+      <article class="card splash">
+        <h2 class="screen-title">一屏总览 · 适老大字</h2>
+        <div class="mega-stats">
+          <div><strong>重点账号</strong><span data-count="10">10</span></div>
+          <div><strong>原创内容</strong><span data-count="218">612</span></div>
+          <div><strong>周播峰值（次）</strong><span data-count="137474">137,474</span></div>
+          <div><strong>单条峰值（次）</strong><span data-count="82637">82,637</span></div>
+          <div><strong>分成+直播（样例）</strong><span>¥ 380.24</span></div>
+          <div><strong>项目</strong><span>青韵馨香</span></div>
+          <p class="traceability">培训签到摘自<strong>《村民培训表》</strong> · 账号/播放量摘自<strong>《村民账号信息》</strong>及延庆台账摘录（前 10 账号） · Word/Markdown/JSON 见项目内 <code>data/</code> 导出。</p>
+        <div class="screen-actions">
+          <a href="bigscreen.html" class="btn btn-primary">打开路演总控大屏（新页）</a>
+        </div>
+      </article>
+    </section>
+
+    <!-- 板块七 -->
+    <section class="panel" id="panel-security" data-panel="security">
+      <div class="grid two">
+        <article class="card">
+          <h2 class="card-title">多级权限</h2>
+          <div class="roles">
+            <span>超级管理员</span><span>村管理员</span><span>运营专员</span><span>志愿者</span>
+          </div>
+          <p class="muted small">村内数据隔离 · 收益默认仅村委与项目管理员可见 · 操作日志全量留存。</p>
+        </article>
+        <article class="card">
+          <h2 class="card-title">隐私 · 备份</h2>
+          <ul class="list-check">
+            <li>姓名/电话/证件自动脱敏，前端昵称或编号。</li>
+            <li>原始数据禁止向第三方或未脱敏提供。</li>
+            <li>每日凌晨全量备份 · 支持时间点恢复。</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

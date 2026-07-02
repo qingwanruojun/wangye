@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>银发乡播 · 可视化总控大屏</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700&family=ZCOOL+XiaoWei&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/bigscreen.css" />
+</head>
+<body class="bs-page">
+  <div class="bs-watercolor" aria-hidden="true"></div>
+
+  <div class="bs-app">
+    <header class="bs-topbar">
+      <div class="bs-topbar-left">
+        <span class="bs-logo-mark" aria-hidden="true">◉</span>
+        <div class="bs-topbar-titles">
+          <h1 class="bs-title">银发乡播 · AI 适老化数据中控</h1>
+          <p class="bs-subtitle">公益轻量版 · 青韵馨香台账 · 与主看板指标同源 · 运营侧一屏投屏</p>
+        </div>
+      </div>
+      <div class="bs-topbar-right">
+        <span class="bs-clock-wrap" title="数据同步时间">
+          <span class="bs-clock-label">同步</span>
+          <time class="bs-clock" id="bsClock" datetime="">--</time>
+        </span>
+        <a class="bs-back-link" href="index.html">← 返回主看板</a>
+        <div class="bs-user" title="演示账号">
+          <span class="bs-user-name">运营专班</span>
+          <span class="bs-user-avatar" aria-hidden="true">运</span>
+        </div>
+      </div>
+    </header>
+
+    <main class="bs-content">
+        <section class="bs-card bs-filter-card" aria-label="筛选">
+          <div class="bs-filter-head">
+            <div class="bs-filter-tabs">
+              <button type="button" class="bs-ftab active" id="bsFtabA">台账口径</button>
+              <button type="button" class="bs-ftab" id="bsFtabB">演示推演</button>
+            </div>
+          </div>
+          <div class="bs-filter-toolbar">
+            <label class="bs-select-wrap">
+              <span class="sr-only">年份</span>
+              <select class="bs-select" title="年份">
+                <option>年份 · 2026</option>
+                <option>年份 · 2025</option>
+              </select>
+            </label>
+            <label class="bs-select-wrap">
+              <span class="sr-only">乡镇</span>
+              <select class="bs-select" title="乡镇">
+                <option>乡镇 · 全部试点</option>
+                <option>大庄科乡</option>
+                <option>香营乡</option>
+              </select>
+            </label>
+            <label class="bs-select-wrap">
+              <span class="sr-only">村庄</span>
+              <select class="bs-select" title="村庄">
+                <option>村庄 · 重点矩阵</option>
+                <option>沙门村矩阵</option>
+                <option>八道河村</option>
+              </select>
+            </label>
+            <label class="bs-select-wrap">
+              <span class="sr-only">账号组</span>
+              <select class="bs-select" title="账号组">
+                <option>账号组 · 视频号</option>
+                <option>台账内 6 账号</option>
+              </select>
+            </label>
+            <div class="bs-filter-actions">
+              <button type="button" class="btn-bs btn-bs-primary">搜索</button>
+              <button type="button" class="btn-bs btn-bs-ghost">重置</button>
+            </div>
+          </div>
+        </section>
+
+        <p class="bs-tab-caption">下列指标与主看板同源；筛选「演示推演」仅切换上方 Tab 状态示意。</p>
+
+        <section class="bs-kpi-row" aria-label="核心指标">
+          <article class="bs-kpi-card">
+            <span class="bs-kpi-ico" aria-hidden="true">◇</span>
+            <div class="bs-kpi-body">
+              <span class="bs-kpi-label">重点跟踪账号</span>
+              <strong class="bs-kpi-val">16</strong>
+            </div>
+          </article>
+          <article class="bs-kpi-card">
+            <span class="bs-kpi-ico" aria-hidden="true">◇</span>
+            <div class="bs-kpi-body">
+              <span class="bs-kpi-label">累计培训覆盖</span>
+              <strong class="bs-kpi-val">29<span class="bs-kpi-unit">人次</span></strong>
+            </div>
+          </article>
+          <article class="bs-kpi-card">
+            <span class="bs-kpi-ico" aria-hidden="true">◇</span>
+            <div class="bs-kpi-body">
+              <span class="bs-kpi-label">周播峰值（摘录）</span>
+              <strong class="bs-kpi-val" id="bsMegaCount" data-target="137474">0</strong>
+            </div>
+          </article>
+          <article class="bs-kpi-card">
+            <span class="bs-kpi-ico" aria-hidden="true">◇</span>
+            <div class="bs-kpi-body">
+              <span class="bs-kpi-label">原创内容累计</span>
+              <strong class="bs-kpi-val">612</strong>
+            </div>
+          </article>
+          <article class="bs-kpi-card">
+            <span class="bs-kpi-ico" aria-hidden="true">◇</span>
+            <div class="bs-kpi-body">
+              <span class="bs-kpi-label">可查分成+激励</span>
+              <strong class="bs-kpi-val">¥380.24</strong>
+            </div>
+          </article>
+        </section>
+
+        <section class="bs-metric-row" aria-label="结构指标">
+          <article class="bs-metric-card">
+            <span class="bs-metric-accent" aria-hidden="true"></span>
+            <div class="bs-metric-body">
+              <span class="bs-metric-label">六阶均值进度</span>
+              <strong class="bs-metric-val">68%</strong>
+            </div>
+          </article>
+          <article class="bs-metric-card">
+            <span class="bs-metric-accent"></span>
+            <div class="bs-metric-body">
+              <span class="bs-metric-label">种子讲师在培</span>
+              <strong class="bs-metric-val">6</strong>
+            </div>
+          </article>
+          <article class="bs-metric-card">
+            <span class="bs-metric-accent"></span>
+            <div class="bs-metric-body">
+              <span class="bs-metric-label">7 日留存预警</span>
+              <strong class="bs-metric-val">2</strong>
+            </div>
+          </article>
+          <article class="bs-metric-card">
+            <span class="bs-metric-accent"></span>
+            <div class="bs-metric-body">
+              <span class="bs-metric-label">单条播放峰值</span>
+              <strong class="bs-metric-val">82,637</strong>
+            </div>
+          </article>
+          <article class="bs-metric-card">
+            <span class="bs-metric-accent"></span>
+            <div class="bs-metric-body">
+              <span class="bs-metric-label">模式复制综合（演）</span>
+              <strong class="bs-metric-val">68</strong>
+            </div>
+          </article>
+        </section>
+
+        <section class="bs-chart-grid" aria-label="图表">
+          <article class="bs-card bs-chart-card">
+            <h3 class="bs-chart-title">全方位成长 · 六阶雷达</h3>
+            <p class="bs-chart-desc">演示进度，与主播成长中心同源口径</p>
+            <div class="bs-radar-wrap">
+              <svg class="bs-radar" viewBox="0 0 200 200" aria-hidden="true">
+                <defs>
+                  <radialGradient id="bsRadarGrad" cx="50%" cy="50%" r="55%">
+                    <stop offset="0%" stop-color="rgba(14, 165, 233, 0.2)" />
+                    <stop offset="70%" stop-color="rgba(13, 148, 136, 0.08)" />
+                    <stop offset="100%" stop-color="rgba(255,255,255,0)" />
+                  </radialGradient>
+                </defs>
+                <circle cx="100" cy="100" r="78" fill="url(#bsRadarGrad)" />
+                <g stroke="rgba(13, 116, 128, 0.18)" fill="none">
+                  <polygon points="100,34 154.8,72 134.2,138 65.8,138 45.2,72" />
+                  <polygon points="100,48 142.24,78.4 127.36,130.6 72.64,130.6 57.76,78.4" />
+                  <polygon points="100,62 129.68,84.8 120.52,123.2 79.48,123.2 70.32,84.8" />
+                </g>
+                <polygon class="bs-radar-fill" points="100,52 137,76 118,128 82,128 63,76" />
+                <polygon class="bs-radar-stroke" fill="none" points="100,52 137,76 118,128 82,128 63,76" />
+                <g class="bs-radar-axis" fill="var(--bs-ink-soft)">
+                  <text x="100" y="24" text-anchor="middle" font-size="10">入门认知</text>
+                  <text x="162" y="78" text-anchor="start" font-size="10">实拍表达</text>
+                  <text x="144" y="168" text-anchor="middle" font-size="10">剪辑发布</text>
+                  <text x="56" y="168" text-anchor="middle" font-size="10">直播互动</text>
+                  <text x="38" y="78" text-anchor="end" font-size="10">橱窗变现</text>
+                </g>
+              </svg>
+            </div>
+          </article>
+
+          <article class="bs-card bs-chart-card">
+            <h3 class="bs-chart-title">全过程趋势 · 周播与培训</h3>
+            <p class="bs-chart-desc">横轴为近 8 周 · 折线为演示订单占位</p>
+            <div class="bs-line-chart">
+              <div class="bs-line-surface">
+                <div class="bs-line-grid"></div>
+                <svg class="bs-line-svg" viewBox="0 0 100 40" preserveAspectRatio="none">
+                  <defs>
+                    <linearGradient id="bsLineGrad" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stop-color="rgba(14, 165, 233, 0.35)" />
+                      <stop offset="100%" stop-color="rgba(14, 165, 233, 0)" />
+                    </linearGradient>
+                  </defs>
+                  <polygon fill="url(#bsLineGrad)" points="2,36 2,28 14,30 26,22 38,24 50,16 62,18 74,10 86,8 98,12 98,36" />
+                  <polyline class="bs-line-path" fill="none" points="2,28 14,30 26,22 38,24 50,16 62,18 74,10 86,8 98,12" />
+                </svg>
+                <div class="bs-line-tip" role="img" aria-label="示例数据点">
+                  <span class="bs-tip-dot"></span>
+                  <div class="bs-tip-bubble">
+                    <span>W5</span>
+                    <strong>72%</strong>
+                  </div>
+                </div>
+              </div>
+              <div class="bs-line-x">
+                <span>25.12</span><span>26.01</span><span>26.02</span><span>26.03</span><span>26.04</span><span>26.05</span><span>26.06</span><span>26.07</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="bs-card bs-chart-card bs-chart-dist">
+            <h3 class="bs-chart-title">全区间分布 · 综合指数</h3>
+            <p class="bs-chart-desc">片区账号演示分档（与主看板柱图刻度一致）</p>
+            <div class="bs-dist-chart" id="bsDistBars">
+              <div class="bs-dist-col" style="--h: 26%">
+                <div class="bs-dist-bar-wrap"><div class="bs-dist-bar"></div></div>
+                <span>40–50</span>
+              </div>
+              <div class="bs-dist-col" style="--h: 52%">
+                <div class="bs-dist-bar-wrap"><div class="bs-dist-bar"></div></div>
+                <span>50–60</span>
+              </div>
+              <div class="bs-dist-col" style="--h: 88%">
+                <div class="bs-dist-bar-wrap"><div class="bs-dist-bar"></div></div>
+                <span>60–70</span>
+              </div>
+              <div class="bs-dist-col" style="--h: 62%">
+                <div class="bs-dist-bar-wrap"><div class="bs-dist-bar"></div></div>
+                <span>70–80</span>
+              </div>
+              <div class="bs-dist-col" style="--h: 34%">
+                <div class="bs-dist-bar-wrap"><div class="bs-dist-bar"></div></div>
+                <span>80+</span>
+              </div>
+            </div>
+          </article>
+        </section>
+
+        <section class="bs-bottom-row">
+          <article class="bs-card bs-panel-detail">
+            <div class="bs-panel-head">
+              <h3>片区账号 · 综合指数</h3>
+              <span class="bs-chip">与主看板横比同源</span>
+            </div>
+            <div class="bs-vbars" id="bsVbars">
+              <div class="bs-vcol">
+                <div class="bs-vbar" style="height: 88%"></div>
+                <em>88</em>
+                <span>八道河村</span>
+              </div>
+              <div class="bs-vcol">
+                <div class="bs-vbar" style="height: 84%"></div>
+                <em>84</em>
+                <span>沙门村矩阵</span>
+              </div>
+              <div class="bs-vcol">
+                <div class="bs-vbar" style="height: 56%"></div>
+                <em>56</em>
+                <span>下花园村</span>
+              </div>
+              <div class="bs-vcol">
+                <div class="bs-vbar" style="height: 72%"></div>
+                <em>72</em>
+                <span>全区均值样例</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="bs-card bs-chart-mixed">
+            <div class="bs-panel-head">
+              <h3>近 8 周 · 培训人次 × 演示订单</h3>
+              <span class="bs-chip">柱=培训 · 折线=占位</span>
+            </div>
+            <div class="bs-mixed-surface">
+              <div class="bs-mixed-grid"></div>
+              <div class="bs-bars-line" id="bsMixedBars"></div>
+              <div class="bs-line-overlay" aria-hidden="true">
+                <svg viewBox="0 0 100 40" preserveAspectRatio="none">
+                  <polyline fill="none" class="bs-mixed-line" points="2,35 14,30 26,32 38,24 50,18 62,20 74,12 86,8" />
+                </svg>
+              </div>
+            </div>
+            <div class="bs-x-labels">
+              <span>W1</span><span>W2</span><span>W3</span><span>W4</span><span>W5</span><span>W6</span><span>W7</span><span>W8</span>
+            </div>
+          </article>
+        </section>
+
+        <section class="bs-card bs-repl-card">
+          <div class="bs-panel-head">
+            <h3>模式复制 · 四维权示意</h3>
+            <span class="bs-chip">≥80 推荐 / 60–80 谨慎</span>
+          </div>
+          <div class="bs-hbars">
+            <div class="bs-hrow">
+              <span>老龄化适宜度 30%</span>
+              <div class="bs-htrack"><div class="bs-hfill" style="width: 71%"></div></div>
+              <strong>71</strong>
+            </div>
+            <div class="bs-hrow">
+              <span>人口腹地 20%</span>
+              <div class="bs-htrack"><div class="bs-hfill" style="width: 60%"></div></div>
+              <strong>60</strong>
+            </div>
+            <div class="bs-hrow">
+              <span>资源禀赋 20%</span>
+              <div class="bs-htrack"><div class="bs-hfill" style="width: 62%"></div></div>
+              <strong>62</strong>
+            </div>
+            <div class="bs-hrow">
+              <span>两委积极性 30%</span>
+              <div class="bs-htrack"><div class="bs-hfill" style="width: 80%"></div></div>
+              <strong>80</strong>
+            </div>
+          </div>
+        </section>
+
+        <p class="bs-footnote">
+          数据与<strong>《延庆银发群体账号情况》</strong>及主站「可视化总控大屏」一致；
+          <strong>F11 全屏</strong>适合路演投屏 · 不涉及老人端操作 · 不向老人采集操作行为
+        </p>
+    </main>
+  </div>
+
+  <script src="js/bigscreen.js"></script>
+</body>
+</html>
