@@ -12,3 +12,14 @@
 # 系统文件
 Thumbs.db
 .DS_Store
+
+# Python / 后端运行时
+__pycache__/
+*.pyc
+server/data/feedback.jsonl
+server/training/output/
+server/training/data/
+
+# 本地嵌套仓库 / 工具缓存
+/keshe_npu_ondevice/
+.claude/

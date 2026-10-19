@@ -26,6 +26,10 @@ const SECTION_META = {
     desc:
       "耦合矩阵（A/F/RVCPM）+ 分村 C1–C12 与帮扶清单；单村滑杆仍可推演，报表口径来自《智赋银龄》",
   },
+  assistant: {
+    title: "AI 问答助手（RAG · LoRA）",
+    desc: "检索本地台账知识库回答运营问题 · 回答附来源 · 可选 LoRA 微调与远程大模型",
+  },
   screen: {
     title: "数据可视化总控大屏",
     desc: "一屏总览 · Excel 台账摘录（16 账号 · 226 原创合计 · 单条峰值 62637 · 培训签到 29 人次）",

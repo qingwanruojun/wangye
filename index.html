@@ -8,6 +8,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;600;700&family=ZCOOL+XiaoWei&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="css/assistant.css" />
 </head>
 <body>
   <div class="watercolor-bg" aria-hidden="true"></div>
@@ -36,6 +37,10 @@
       </button>
       <button type="button" class="nav-item" data-section="replicate">
         <span class="dot"></span>村庄适配度评估
+      </button>
+      <button type="button" class="nav-item" data-section="assistant">
+        <span class="dot"></span>AI 问答助手
+        <span class="nav-ai-tag">RAG</span>
       </button>
       <button type="button" class="nav-item" data-section="screen">
         <span class="dot"></span>可视化总控大屏
@@ -185,7 +190,7 @@
         <article class="card stat">
           <h3>头部账号周播（样例）</h3>
           <p class="big">13.75万</p>
-          <span class="hint">柳艳云 4/27—6/12 周期 · 137474 次</span>
+          <span class="hint">八道河村书记号 4/27—6/12 周期 · 137474 次</span>
         </article>
         <article class="card stat">
           <h3>单条播放峰值（样例）</h3>
@@ -262,13 +267,13 @@
                 <td>台账样本峰值播放 62637（另一条样本 56110）· 《村民账号信息》</td>
               </tr>
               <tr>
-                <td><strong>柳艳云（村书记号）</strong></td>
+                <td><strong>八道河村书记号</strong></td>
                 <td>香营乡八道河村</td>
                 <td>141</td>
                 <td>周播 137474 · 评论 1240 / 分享 501 · 分成累计 ¥333.68 · 直播 ¥18.95</td>
               </tr>
               <tr>
-                <td><strong>延龙寻路（李小琴）</strong></td>
+                <td><strong>延龙寻路（第一书记账号）</strong></td>
                 <td>大庄科乡下花园村</td>
                 <td>13</td>
                 <td>赞 1934 / 收藏 1241 · 台账样本播放 140 / 883 · 第一书记政策向 · 《村民账号信息》</td>
@@ -436,7 +441,7 @@
             <div class="cv-arrows">
               <div class="cv-edge">
                 <span>台账 →</span><strong>延庆区香营乡八道河村</strong>
-                <span class="cv-mini">柳艳云 · 131 条原创 · 周播曾达 13.75 万次</span>
+                <span class="cv-mini">八道河村书记号 · 131 条原创 · 周播曾达 13.75 万次</span>
               </div>
               <div class="cv-edge">
                 <span>台账 →</span><strong>大庄科乡下花园村</strong>
@@ -667,6 +672,97 @@
       </div>
     </section>
 
+    <!-- AI 问答助手 -->
+    <section class="panel" id="panel-assistant" data-panel="assistant">
+      <div class="assistant-layout">
+        <article class="card assistant-chat-card">
+          <header class="assistant-head">
+            <div>
+              <h2 class="card-title flush">乡播 AI 问答助手</h2>
+              <p class="muted small no-mt">
+                浏览器内即可检索台账知识库 · 回答附来源 · 可选 FastAPI 后端与 LoRA
+              </p>
+            </div>
+            <div class="assistant-head-actions">
+              <span class="ai-status ai-status-checking" id="aiStatus"><i></i><span>连接后端…</span></span>
+              <button type="button" class="btn btn-ghost ai-clear-btn" id="chatClear">清空对话</button>
+            </div>
+          </header>
+
+          <div class="chat-log" id="chatLog" aria-live="polite">
+            <div class="chat-msg assistant">
+              <span class="chat-avatar">AI</span>
+              <div class="chat-bubble">
+                <p class="chat-text">你好，我是乡播 AI 问答助手。可以问我主播成长、视频号流量、创作分成、农文旅、村庄适配度或隐私合规等问题。</p>
+                <div class="chat-meta" id="welcomeMeta">正在检测 RAG 后端…</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="quick-prompts" id="quickPrompts" aria-label="快捷提问">
+            <button type="button" class="quick-prompt">香椿季有哪些爆款选题和收益？</button>
+            <button type="button" class="quick-prompt">胖嫂子的账号表现如何？</button>
+            <button type="button" class="quick-prompt">六阶成长体系和当前短板？</button>
+            <button type="button" class="quick-prompt">新村庄如何做适配度评估？</button>
+            <button type="button" class="quick-prompt">数据隐私怎么保护？</button>
+          </div>
+
+          <form class="chat-input-row" id="chatForm">
+            <label class="sr-only" for="chatInput">向 AI 助手提问</label>
+            <input
+              id="chatInput"
+              class="chat-input"
+              type="text"
+              placeholder="输入你的问题，例如：创作分成有多少？"
+              autocomplete="off"
+              maxlength="500"
+            />
+            <button type="submit" class="btn btn-primary chat-send" id="chatSend">发送</button>
+          </form>
+          <p class="muted tiny chat-foot-note">
+            回答由检索到的台账摘要生成，仅供运营参考；涉及个人敏感信息时请以原始台账为准。
+          </p>
+        </article>
+
+        <aside class="assistant-side">
+          <article class="card ai-side-card">
+            <h2 class="card-title">RAG 检索来源</h2>
+            <div id="ragSources" class="rag-sources">
+              <p class="muted small">发送问题后，这里会显示命中的知识库片段与相似度。</p>
+            </div>
+          </article>
+
+          <article class="card ai-side-card">
+            <h2 class="card-title">模型与微调</h2>
+            <ul class="ai-pipeline">
+              <li>
+                <span class="ai-step">1</span>
+                <div><strong>本地分块索引</strong><small id="aiKbText">TF-IDF 余弦检索 · 加载中</small></div>
+              </li>
+              <li>
+                <span class="ai-step">2</span>
+                <div><strong>RAG 组织回答</strong><small id="aiModeText">抽取式 / LLM 生成</small></div>
+              </li>
+              <li>
+                <span class="ai-step">3</span>
+                <div><strong>LoRA 可选适配</strong><small id="aiLoraText">训练脚本已就绪</small></div>
+              </li>
+            </ul>
+          </article>
+
+          <article class="card ai-side-card">
+            <h2 class="card-title">知识库</h2>
+            <div id="kbDocList" class="kb-doc-list">
+              <p class="muted small">启动后端后可查看文档列表。</p>
+            </div>
+            <p class="muted tiny no-mb">
+              知识库位于 <code>server/knowledge_base/</code>，追加 Markdown 后重启后端即可生效。
+            </p>
+          </article>
+        </aside>
+      </div>
+    </section>
+
     <!-- 板块六大屏 -->
     <section class="panel" id="panel-screen" data-panel="screen">
       <article class="card splash">
@@ -708,5 +804,8 @@
   </main>
 
   <script src="js/main.js"></script>
+  <script src="js/rag-index.js"></script>
+  <script src="js/browser-rag.js"></script>
+  <script src="js/assistant.js"></script>
 </body>
 </html>
