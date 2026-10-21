@@ -20,6 +20,17 @@ cp -R "$ROOT/css" "$ROOT/js" "$OUT/"
 cp "$ROOT/index.html" "$ROOT/bigscreen.html" "$OUT/"
 cp "$SRC/app.py" "$SRC/requirements.txt" "$SRC/README.md" "$OUT/"
 
+# 创空间页面与接口同源，构建时清空远程后端地址，避免多一跳探测
+python3 - "$OUT/index.html" <<'PY'
+import re, sys
+path = sys.argv[1]
+with open(path, encoding="utf-8") as handle:
+    html = handle.read()
+html = re.sub(r'window\.ASSISTANT_API_BASE = "[^"]*";', 'window.ASSISTANT_API_BASE = "";', html)
+with open(path, "w", encoding="utf-8") as handle:
+    handle.write(html)
+PY
+
 find "$OUT" -type d -name __pycache__ -prune -exec rm -rf {} +
 
 echo "已生成：$OUT"

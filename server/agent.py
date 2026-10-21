@@ -110,7 +110,11 @@ TOOL_NAMES = [spec["function"]["name"] for spec in TOOL_SPECS]
 REVENUE_RE = re.compile(r"分成|收益|收入|对账|赚|钱")
 TRAINING_RE = re.compile(r"培训|签到|场次|课时")
 GROWTH_RE = re.compile(r"六阶|成长路径|成长阶段|入门认知|种子讲师")
-VILLAGE_CALC_RE = re.compile(r"适配度|AHP|RVCPM|四象限|明星区|潜力区|机会区|边缘区|怎么算|评分", re.I)
+VILLAGE_CALC_RE = re.compile(r"适配度|AHP|RVCPM|四象限|明星区|潜力区|机会区|边缘区|村庄.{0,6}(评分|打分|排名)", re.I)
+VILLAGE_FIT_RE = re.compile(
+    r"(我们村|咱村|本村|村里|村委).{0,8}(适合|能不能|可不可以|能做|该不该)"
+    r"|适合.{0,6}(直播|电商|助农|带货|做账号)"
+)
 ACCOUNT_HINT_RE = re.compile(r"账号|主播|播放|点赞|收藏|粉丝|关注|原创|完播|数字评分")
 REVENUE_LINE_RE = re.compile(r"¥|分成|收入|收益|激励|对账|金额")
 LIST_RE = re.compile(r"多少|几|哪些|列表|概况|排名|最好|最差|谁")
@@ -177,7 +181,7 @@ class Agent:
             return plan
 
         villages = find_villages(question)
-        if villages or VILLAGE_CALC_RE.search(question):
+        if villages or VILLAGE_CALC_RE.search(question) or VILLAGE_FIT_RE.search(question):
             village = villages[0]["short"] if len(villages) == 1 else ""
             return [("get_village_score", {"village": village})]
 
