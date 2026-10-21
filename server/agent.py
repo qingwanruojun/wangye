@@ -115,6 +115,10 @@ VILLAGE_FIT_RE = re.compile(
     r"(我们村|咱村|本村|村里|村委).{0,8}(适合|能不能|可不可以|能做|该不该)"
     r"|适合.{0,6}(直播|电商|助农|带货|做账号)"
 )
+# 问方法论（怎么评估、看哪些指标）时应走知识库，而不是直接返回示例村评分
+VILLAGE_METHOD_RE = re.compile(
+    r"如何|怎样|步骤|流程|方法|指标|维度|体系|评估标准|怎么(做|评估|判断|开展|落地|测)"
+)
 ACCOUNT_HINT_RE = re.compile(r"账号|主播|播放|点赞|收藏|粉丝|关注|原创|完播|数字评分")
 REVENUE_LINE_RE = re.compile(r"¥|分成|收入|收益|激励|对账|金额")
 LIST_RE = re.compile(r"多少|几|哪些|列表|概况|排名|最好|最差|谁")
@@ -181,9 +185,13 @@ class Agent:
             return plan
 
         villages = find_villages(question)
-        if villages or VILLAGE_CALC_RE.search(question) or VILLAGE_FIT_RE.search(question):
+        if villages:
             village = villages[0]["short"] if len(villages) == 1 else ""
             return [("get_village_score", {"village": village})]
+        if VILLAGE_CALC_RE.search(question) or VILLAGE_FIT_RE.search(question):
+            if VILLAGE_METHOD_RE.search(question):
+                return []
+            return [("get_village_score", {"village": ""})]
 
         if TRAINING_RE.search(question):
             return [("get_training_stats", {})]
