@@ -236,7 +236,7 @@
         const best = results.length ? results[0][1] : 0;
 
         if (!results.length || best < 0.1) {
-          result = { answer: MISS_ANSWER, sources };
+          result = { answer: MISS_ANSWER, sources: [] };
         } else {
           const sentences = this.sentencePick(searchQuery, results, 3);
           const body = sentences.length

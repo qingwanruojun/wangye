@@ -75,18 +75,24 @@ def main() -> None:
     )
 
     def format_and_tokenize(batch: dict) -> dict:
-        texts = [
-            tokenizer.apply_chat_template(messages, tokenize=False, add_generation_prompt=False)
-            for messages in batch["messages"]
-        ]
-        encoded = tokenizer(
-            texts,
-            truncation=True,
-            max_length=args.max_length,
-            padding=False,
-        )
-        encoded["labels"] = [ids.copy() for ids in encoded["input_ids"]]
-        return encoded
+        input_ids, labels = [], []
+        for messages in batch["messages"]:
+            prompt_ids = tokenizer.apply_chat_template(
+                messages[:-1], tokenize=True, add_generation_prompt=True
+            )
+            full_ids = tokenizer.apply_chat_template(
+                messages, tokenize=True, add_generation_prompt=False
+            )[: args.max_length]
+            # 只对 assistant 回答计算 loss，system / user 部分屏蔽为 -100
+            limit = min(len(prompt_ids), len(full_ids))
+            prefix = limit if prompt_ids[:limit] == full_ids[:limit] else 0
+            labels.append([-100] * prefix + full_ids[prefix:])
+            input_ids.append(full_ids)
+        return {
+            "input_ids": input_ids,
+            "attention_mask": [[1] * len(ids) for ids in input_ids],
+            "labels": labels,
+        }
 
     tokenized = raw.map(format_and_tokenize, batched=True, remove_columns=raw["train"].column_names)
     print(f"训练样本 {len(tokenized['train'])} 条 · 验证 {len(tokenized['validation'])} 条")

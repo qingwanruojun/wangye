@@ -3,9 +3,12 @@
  */
 
 (function () {
-  const API_CANDIDATES = ["", "http://127.0.0.1:8000", "http://localhost:8000"];
+  const REMOTE_API_BASE = String(window.ASSISTANT_API_BASE || "").replace(/\/+$/, "");
+  const API_CANDIDATES = [REMOTE_API_BASE, "", "http://127.0.0.1:8000", "http://localhost:8000"]
+    .filter((base, index, list) => list.indexOf(base) === index);
   const PROBE_TIMEOUT = 1200;
-  const CHAT_TIMEOUT = 45000;
+  const REMOTE_PROBE_TIMEOUT = 30000;
+  const CHAT_TIMEOUT = 90000;
 
   const state = {
     apiBase: null,
@@ -41,6 +44,9 @@
     "rag-local": "抽取式 RAG",
     "llm-rag": "LLM + RAG",
     "lora-rag": "LoRA + RAG",
+    "agent-llm": "Agent · LLM 工具调用",
+    "agent-lora": "Agent · LoRA 合成",
+    "agent-local": "Agent · 规则编排",
     "browser-rag": "浏览器内 RAG",
     "offline-demo": "本地演示",
   };
@@ -201,9 +207,12 @@
       (base) => !(window.location.protocol === "file:" && base === "")
     );
 
+    const isLocal = (base) => !base || /^https?:\/\/(127\.0\.0\.1|localhost)/.test(base);
+
     for (const base of candidates) {
       try {
-        const data = await fetchJson(`${base}/api/health`, undefined, PROBE_TIMEOUT);
+        const timeout = isLocal(base) ? PROBE_TIMEOUT : REMOTE_PROBE_TIMEOUT;
+        const data = await fetchJson(`${base}/api/health`, undefined, timeout);
         if (data && data.status === "ok") {
           state.apiBase = base;
           state.online = true;
@@ -480,7 +489,11 @@
 
     const modeLabel = MODE_LABELS[result.mode] || "RAG";
     const latency = result.latency_ms ? ` · ${Math.round(result.latency_ms)} ms` : "";
-    const meta = `${modeLabel}${latency}${result.mode === "offline-demo" ? " · 未连接后端" : ""}`;
+    const tools =
+      Array.isArray(result.trace) && result.trace.length
+        ? ` · 工具：${result.trace.map((item) => item.tool).join(" → ")}`
+        : "";
+    const meta = `${modeLabel}${latency}${tools}${result.mode === "offline-demo" ? " · 未连接后端" : ""}`;
     appendMessage("assistant", result.answer, meta, result.sources);
     renderSources(result.sources);
 

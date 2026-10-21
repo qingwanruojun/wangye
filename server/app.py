@@ -24,6 +24,7 @@ from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field
 
+from .agent import Agent
 from .local_model import resolve_adapter_path
 from .rag import RagAssistant
 
@@ -41,6 +42,7 @@ app.add_middleware(
 )
 
 assistant = RagAssistant(KB_DIR)
+agent = Agent(assistant)
 
 
 class ChatMessage(BaseModel):
@@ -79,6 +81,7 @@ def _health_payload() -> dict:
             "adapter": resolve_adapter_path(),
             "local_model": os.environ.get("LOCAL_MODEL_PATH") or None,
         },
+        "agent": agent.info,
         "time": datetime.now().isoformat(timespec="seconds"),
     }
 
@@ -96,10 +99,15 @@ def knowledge_base() -> dict:
     }
 
 
+@app.get("/api/tools")
+def tools() -> dict:
+    return {"agent": agent.info, "tools": agent.tool_specs}
+
+
 @app.post("/api/chat")
 def chat(payload: ChatRequest) -> dict:
     started = time.perf_counter()
-    result = assistant.answer(
+    result = agent.answer(
         payload.question,
         top_k=payload.top_k,
         history=[item.model_dump() for item in payload.history],

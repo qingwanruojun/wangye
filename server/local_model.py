@@ -7,10 +7,14 @@
 from __future__ import annotations
 
 import os
+import re
 import threading
 from pathlib import Path
 
 DEFAULT_ADAPTER_DIR = Path(__file__).resolve().parent / "training" / "output" / "lora-adapter"
+
+CALC_HINT_RE = re.compile(r"怎么算|如何计算|怎么计算|计算公式|公式|多少|比例|占比|权重")
+CALC_HINT = "\n\n涉及计算时请原样引用片段中的公式，不要自行解释或编造。"
 
 
 def resolve_adapter_path() -> str | None:
@@ -48,13 +52,28 @@ class LocalLoraModel:
             import torch
             from transformers import AutoModelForCausalLM, AutoTokenizer
 
-            tokenizer = AutoTokenizer.from_pretrained(self.model_path, trust_remote_code=True)
-            model = AutoModelForCausalLM.from_pretrained(
-                self.model_path,
-                torch_dtype=torch.float16 if torch.cuda.is_available() else torch.float32,
-                device_map="auto",
-                trust_remote_code=True,
-            )
+            # 优先只读本地缓存，避免离线时每个请求都卡在 HF Hub 重试上
+            try:
+                tokenizer = AutoTokenizer.from_pretrained(
+                    self.model_path, trust_remote_code=True, local_files_only=True
+                )
+            except Exception:
+                tokenizer = AutoTokenizer.from_pretrained(self.model_path, trust_remote_code=True)
+            try:
+                model = AutoModelForCausalLM.from_pretrained(
+                    self.model_path,
+                    torch_dtype=torch.float16 if torch.cuda.is_available() else torch.float32,
+                    device_map="auto",
+                    trust_remote_code=True,
+                    local_files_only=True,
+                )
+            except Exception:
+                model = AutoModelForCausalLM.from_pretrained(
+                    self.model_path,
+                    torch_dtype=torch.float16 if torch.cuda.is_available() else torch.float32,
+                    device_map="auto",
+                    trust_remote_code=True,
+                )
             if self.adapter_path and os.path.isdir(self.adapter_path):
                 from peft import PeftModel
 
@@ -74,9 +93,19 @@ class LocalLoraModel:
         messages = [
             {
                 "role": "system",
-                "content": "你是银发乡播看板的问答助手，只依据知识库片段回答，简体中文，简洁亲切。",
+                "content": (
+                    "你是银发乡播看板的问答助手。只依据知识库片段回答，不要编造片段中没有的"
+                    "数字、公式或结论；片段中有公式、金额、比例时须原样引用；"
+                    "资料不足时明确说明。使用简体中文，简洁亲切。"
+                ),
             },
-            {"role": "user", "content": f"知识库片段：\n{context}\n\n用户问题：{question}"},
+            {
+                "role": "user",
+                "content": (
+                    f"知识库片段：\n{context}\n\n用户问题：{question}"
+                    + (CALC_HINT if CALC_HINT_RE.search(question) else "")
+                ),
+            },
         ]
         try:
             text = self._tokenizer.apply_chat_template(

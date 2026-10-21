@@ -23,3 +23,9 @@ server/training/data/
 # 本地嵌套仓库 / 工具缓存
 /keshe_npu_ondevice/
 .claude/
+
+# 部署构建目录与令牌
+deploy/*/build/
+deploy/*/repo/
+.modelscope_token
+.modelscope_git_token

@@ -31,6 +31,10 @@ FOLLOWUP_RE = re.compile(
     r"^(那|那么|还有|这个|那个|这些|上述|上面|刚才|它|他|她)|呢[？?]?\s*$"
 )
 
+# 计算类问题要求模型原样引用公式，避免 0.5B 模型自行编造解释
+CALC_HINT_RE = re.compile(r"怎么算|如何计算|怎么计算|计算公式|公式|多少|比例|占比|权重")
+CALC_HINT = "\n\n涉及计算时请原样引用片段中的公式，不要自行解释或编造。"
+
 PUNCT_RE = re.compile(r"[\s，。；：、！？「」『』“”‘’（）()\[\]【】¥$%\-—–/\\.,;:!?\"'·]+")
 
 QUESTION_STOPWORDS = {
@@ -77,6 +81,7 @@ class Chunk:
     doc_title: str
     heading: str
     text: str
+    seq: int = 0
     tokens: Counter = field(default_factory=Counter)
     weight: dict[str, float] = field(default_factory=dict)
 
@@ -145,6 +150,7 @@ class KnowledgeBase:
         self.chunks: list[Chunk] = []
         self.documents: list[dict] = []
         self._idf: dict[str, float] = {}
+        self._doc_sequences: dict[str, list[Chunk]] = {}
         self._load()
 
     def _load(self) -> None:
@@ -160,6 +166,7 @@ class KnowledgeBase:
                         doc_title=title,
                         heading=heading,
                         text=piece.strip(),
+                        seq=doc_chunks,
                     )
                     chunk.tokens = Counter(tokenize(f"{title} {heading} {piece}"))
                     if not chunk.tokens:
@@ -169,6 +176,8 @@ class KnowledgeBase:
             self.documents.append(
                 {"doc": path.name, "title": title, "chunks": doc_chunks}
             )
+        for chunk in self.chunks:
+            self._doc_sequences.setdefault(chunk.doc_id, []).append(chunk)
         self._build_index()
 
     def _build_index(self) -> None:
@@ -219,6 +228,33 @@ class KnowledgeBase:
                 scored.append((chunk, score))
         scored.sort(key=lambda item: item[1], reverse=True)
         return scored[:top_k]
+
+    def expand_context(
+        self, results: list[tuple[Chunk, float]], max_chunks: int = 8
+    ) -> list[tuple[Chunk, float]]:
+        """保留原始排序，再追加最佳命中文档的相邻小节，缓解短小节被漏召回。"""
+        if not results:
+            return []
+        primary_doc = results[0][0].doc_id
+        expanded = list(results)
+        seen = {(chunk.doc_id, chunk.seq) for chunk, _score in results}
+        for chunk, _score in results:
+            if chunk.doc_id != primary_doc:
+                continue
+            sequence = self._doc_sequences.get(chunk.doc_id, [])
+            for offset in (1, -1):
+                index = chunk.seq + offset
+                if not 0 <= index < len(sequence):
+                    continue
+                neighbor = sequence[index]
+                key = (neighbor.doc_id, neighbor.seq)
+                if key in seen:
+                    continue
+                seen.add(key)
+                expanded.append((neighbor, 0.0))
+                if len(expanded) >= max_chunks:
+                    return expanded
+        return expanded
 
     def sentence_pick(self, question: str, results: list[tuple[Chunk, float]], limit: int = 3) -> list[str]:
         query = self._query_vector(question)
@@ -327,14 +363,15 @@ class RagAssistant:
         if not results or best_score < 0.10:
             return self._result(
                 "知识库中没有检索到足够相关的内容。可以换一种问法，或试试：账号表现、六阶成长、创作分成、香椿季选题、AHP 适配度、隐私保护。",
-                sources,
+                [],
                 self.current_mode(has_context=False),
             )
 
-        llm_answer = self._call_local_model(question, results)
+        context_results = self.kb.expand_context(results)
+        llm_answer = self._call_local_model(question, context_results)
         mode = "lora-rag"
         if llm_answer is None:
-            llm_answer = self._call_llm(question, results, history or [])
+            llm_answer = self._call_llm(question, context_results, history or [])
             mode = "llm-rag"
         if llm_answer is None:
             sentences = self.kb.sentence_pick(search_query, results)
@@ -410,6 +447,7 @@ def _llm_messages(question: str, results: list[tuple[Chunk, float]], history: li
     system = (
         "你是「银发乡播·AI 适老化大数据服务看板」的问答助手。"
         "请只依据给出的项目知识库片段回答，不要编造台账中没有的数字；"
+        "片段中有公式、金额、比例时须原样引用；"
         "资料不足时明确说明，并建议用户查看对应页面。"
         "回答使用简体中文，语气亲切、简洁，适合村委与银发主播阅读，必要时用短列表。"
     )
@@ -419,12 +457,10 @@ def _llm_messages(question: str, results: list[tuple[Chunk, float]], history: li
         content = str(item.get("content", ""))[:1200]
         if role in {"user", "assistant"} and content:
             messages.append({"role": role, "content": content})
-    messages.append(
-        {
-            "role": "user",
-            "content": f"知识库片段：\n{_context_text(results)}\n\n用户问题：{question}",
-        }
-    )
+    content = f"知识库片段：\n{_context_text(results)}\n\n用户问题：{question}"
+    if CALC_HINT_RE.search(question):
+        content += CALC_HINT
+    messages.append({"role": "user", "content": content})
     return messages
 
 
